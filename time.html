@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="time.css" />
+
+    <title>Countdown Timer</title>
+  </head>
+  <body>
+    <div class="sparkle-bg">
+    <h1 class="count">Countdown To My BIRTHDAY</h1>
+
+    <div id="countdown"></div>
+
+    <script>
+      // Target date (Your birthday - September 1st)
+      const targetDate = new Date(new Date().getFullYear(), 8, 1).getTime();
+
+      // Update the countdown every second
+      const interval = setInterval(function () {
+        // Get current date and time
+        const now = new Date().getTime();
+
+        // Calculate the remaining time
+        let distance;
+        if (now > targetDate) {
+          const nextYear = new Date().getFullYear() + 1;
+          const newTargetDate = new Date(nextYear, 8, 1).getTime();
+          distance = newTargetDate - now;
+        } else {
+          distance = targetDate - now;
+        }
+
+        // Calculate days, hours, minutes, and seconds
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the countdown
+        document.getElementById("countdown").innerHTML = `
+        <p>${days}d ${hours}h ${minutes}m ${seconds}s</p>
+      `;
+
+        // If the countdown is over, display a message
+        if (distance < 0) {
+          clearInterval(interval);
+          document.getElementById("countdown").innerHTML =
+            "<p>Happy Birthday!</p>";
+        }
+      }, 1000); // Update every second
+    </script>
+  </body>
+</html>
